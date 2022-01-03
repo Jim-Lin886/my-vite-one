@@ -11,7 +11,7 @@ import logo from "../assets/logo.svg";
 export default {
   name: "Home",
   data: () => ({
-    msg: "hello world",
+    msg: "hello world", 
   }),
 };
 </script>
