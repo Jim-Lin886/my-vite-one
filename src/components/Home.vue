@@ -12,7 +12,6 @@ export default {
   name: "Home",
   data: () => ({
     msg: "hello world",
-    
   }),
 };
 </script>
