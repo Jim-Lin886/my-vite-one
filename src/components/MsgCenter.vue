@@ -10,19 +10,23 @@
   <v-btn size="x-small" color="secondary" @click="btn_updateCount">
     Update Count
   </v-btn>
-
   <v-btn size="small" color="primary" @click="btn_updateMsgInfo">
     Update MsgInfo
   </v-btn>
-
   <v-btn color="warning" @click="btn_updateMsgQueue"> Update MsgQueue </v-btn>
-
+  <h1>Action</h1>
   <v-btn color="error" size="large" @click="btn_clearAll"> Clear All </v-btn>
+  <v-btn color="primary" @click="btn_actionCount"> async Clear All </v-btn>
+  <h1>TBD</h1>
+  
+  <v-btn rounded="lg" color="primary"> TBD </v-btn>
+  <v-btn :rounded="0" color="primary"> TBD </v-btn>
+  <v-btn rounded="pill" color="primary"> TBD </v-btn>
 </template>
 
 <script>
 import { ref, reactive } from "vue";
-import { mapState, mapGetters, mapMutations } from "vuex";
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 import emunMutation from "../plugins/vuestore-mutation-type";
 
 export default {
@@ -61,6 +65,11 @@ export default {
       updateMsgInfoMutation: emunMutation.UPDATE_MSG_INFO,
       updateMsgQueueMutation: emunMutation.UPDATE_MSG_QUEUE,
     }),
+    ...mapActions({
+      setCountAction: emunMutation.ACTION_COUNT,
+      setMsgInfoAction: emunMutation.SET_MSG_INFO,
+      setMsgQueueAction: emunMutation.SET_MSG_QUEUE,
+    }),
     btn_updateCount() {
       this.updateCountMutation(10);
     },
@@ -83,10 +92,15 @@ export default {
       });
     },
     btn_clearAll() {
-      countState = 0;
-      msgInfoState = "";
-      msgQueueState = [];
-      console.log("but_none_state.count", this.$store.state.count);
+      // this.setCountAction(0);
+      // this.setMsgInfoAction("");
+      // this.setMsgQueueAction([]);
+      
+      this.$store.dispatch("clearAll");
+
+    },
+    btn_actionCount() {
+      this.$store.dispatch("asyncA");
     },
   },
 };
