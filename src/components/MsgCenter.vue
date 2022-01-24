@@ -18,10 +18,10 @@
   <v-btn color="error" size="large" @click="btn_clearAll"> Clear All </v-btn>
   <v-btn color="primary" @click="btn_actionCount"> async Clear All </v-btn>
   <h1>TBD</h1>
-  
-  <v-btn rounded="lg" color="primary"> TBD </v-btn>
-  <v-btn :rounded="0" color="primary"> TBD </v-btn>
-  <v-btn rounded="pill" color="primary"> TBD </v-btn>
+
+  <v-btn rounded="lg" color="primary">  <p>{{ $t("label.hello") }}</p> </v-btn>
+  <v-btn :rounded="0" color="primary">  <p>{{ $t("label.hello") }}</p> </v-btn>
+  <v-btn rounded="pill" color="primary">  <p>{{ $t("label.world") }}</p> </v-btn>
 </template>
 
 <script>
@@ -95,12 +95,13 @@ export default {
       // this.setCountAction(0);
       // this.setMsgInfoAction("");
       // this.setMsgQueueAction([]);
-      
       this.$store.dispatch("clearAll");
-
+      // let a = await this.$store.dispatch("clearAll");
+      console.log(a);
     },
     btn_actionCount() {
-      this.$store.dispatch("asyncA");
+      // this.$store.dispatch("asyncClearAll");
+      this.$store.dispatch("asynComboClearAll");
     },
   },
 };

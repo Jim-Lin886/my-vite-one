@@ -1,11 +1,14 @@
 import { createStore } from "vuex";
 import emunMutation from "./vuestore-mutation-type";
+import i18n from "./i18n"
+import moment from 'moment'
 
 const store = createStore({
   state() {
     //this.$store.state.count
 
     return {
+      lang: "tw",
       count: 0,
       msgInfo: "Hellow World!!!",
       msgQueue: [
@@ -13,7 +16,7 @@ const store = createStore({
         { name: "BBB", read: true },
         { name: "CCC", read: false },
       ],
-      setTimes: 1,
+      setTimes: 0,
     };
   },
   getters: {
@@ -23,7 +26,14 @@ const store = createStore({
   },
   mutations: {
     //store.commit([emunMutation.UPDATE_COUNT])
-
+    
+    setLocaleLang(state, payload) {
+     
+      state.lang = payload;
+      i18n.global.locale = payload;
+      console.log("setLocaleLang", i18n.global.locale);
+     
+    },
     [emunMutation.UPDATE_COUNT](state, payload) {
       state.count += payload;
     },
@@ -51,13 +61,13 @@ const store = createStore({
       state.msgQueue = payload;
     },
     clearAll({ dispatch }) {
-      dispatch("asyncClearAll").then((res) => {
+      return dispatch("asyncClearAll").then((res) => {
         console.log("clearAll_then", res);
       }).catch((error) => {
         console.log("clearAll_catch", error);
       });
     },
-    asyncClearAll({ state, commit, dispatch }) {
+    async asyncClearAll({ state, commit, dispatch }) {
       var times = state.setTimes;
 
       return new Promise((resolve, reject) => {
@@ -73,9 +83,15 @@ const store = createStore({
             alert("asyncA_reject");
             reject("asyncA_reject");
           }
-        }, 1000);
+        }, 2000);
       });
     },
+    async asynComboClearAll({ commit, dispatch }) {
+      console.log("asynComboClearAll-asyncClearAll", moment(new Date).format("YYYY-MM-DD hh:mm:ss SSS"));
+      let a = await dispatch("asyncClearAll"); 
+      console.log("asynComboClearAll-emunMutation.SET_COUNT", new Date);
+      commit(emunMutation.UPDATE_COUNT, NaN)
+    }
   },
 });
 
